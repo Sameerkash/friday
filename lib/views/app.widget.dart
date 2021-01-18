@@ -12,11 +12,15 @@ class AppWidget extends HookWidget {
   Widget build(BuildContext context) {
     final auth = useProvider(authProvider.state);
     return Scaffold(
-      body: auth.map(
-        loading: (_) => Center(child: CircularProgressIndicator()),
-        authenticated: (user) => NavBarView(),
-        unAuthenticated: (_) => AuthView(),
-      ),
+      body: 
+      // auth.map(
+      //   loading: (_) => Center(child: CircularProgressIndicator()),
+      //   authenticated: (user) => 
+        
+        NavBarView(),
+        
+      //   unAuthenticated: (_) => AuthView(),
+      // ),
     );
   }
 }

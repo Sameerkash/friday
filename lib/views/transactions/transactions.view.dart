@@ -4,10 +4,10 @@ import 'package:direct_select_flutter/direct_select_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:friday/widgets/dropdown.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import 'package:friday/widgets/creditcards.dart';
+import 'package:friday/widgets/dropdown.dart';
 
 class TransactionView extends StatelessWidget {
   @override
@@ -164,9 +164,7 @@ class Transactions extends StatelessWidget {
                 child: Column(children: [
                   DirectSelectFeild(
                     label: "",
-                    onSelect: (val, i, context) {
-
-                    },
+                    onSelect: (val, i, context) {},
                     data: ["All", "Debit", "Credit"],
                   ),
                   // CustomDropDownTwo(
@@ -181,11 +179,12 @@ class Transactions extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: 20,
                     itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                          title: Text(
-                        'Transaction $index',
-                        style: TextStyle(color: Colors.black54),
-                      ));
+                      return TransactionDetails(
+                        merchentName: "Aryan Sharma",
+                        date: "31,Jan 2020",
+                        amount: 500,
+                        time: "4:55 PM",
+                      );
                     },
                   ),
                 ]),
@@ -193,6 +192,66 @@ class Transactions extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class TransactionDetails extends StatelessWidget {
+  final IconData icon;
+  final String merchentName;
+  final double amount;
+  final String date;
+  final String time;
+  final bool isDebit;
+  const TransactionDetails({
+    Key key,
+    this.icon,
+    this.merchentName = "",
+    this.amount = 0.0,
+    this.date = '',
+    this.time = '',
+    this.isDebit = true,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final subtitleStyle =
+        Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.black54);
+
+    final titleStyle =
+        Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.black);
+    return ListTile(
+      leading: Icon(
+        Icons.card_giftcard,
+        color: Colors.pink,
+      ),
+      subtitle: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            date,
+            style: subtitleStyle,
+          ),
+          Text(
+            time,
+            style: subtitleStyle,
+          ),
+        ],
+      ),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            merchentName,
+            style: titleStyle,
+          ),
+          Text(
+            "$amount",
+            style:
+                titleStyle.copyWith(color: isDebit ? Colors.red : Colors.green),
+          ),
+        ],
       ),
     );
   }

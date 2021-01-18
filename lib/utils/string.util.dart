@@ -11,3 +11,9 @@ List<String> rewards = [
   "assets/r3.png",
   "assets/r2.png",
 ];
+
+List<String> cards = [
+  "assets/Group 10772.svg",
+  "assets/Group 10773.svg",
+  "assets/Group 10774.svg"
+];

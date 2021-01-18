@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,51 +27,59 @@ class VirtualCard extends StatelessWidget {
       child: Stack(
         children: [
           Align(child: SvgPicture.asset(image)),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              height: 0.15.sh,
-              width: 0.65.sw,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(cardNumber),
-                  SizedBox(
-                    height: 0.0265.sh,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        name,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      SizedBox(
-                        width: 0.01.sw,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Text(
-                          "valid \n thru",
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .copyWith(fontSize: 11),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 0.15.sh,
+                width: 0.65.sw,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(cardNumber),
+                    SizedBox(
+                      height: 0.0265.sh,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 0.15.sw,
+                          child: AutoSizeText(
+                            name,
+                            style: Theme.of(context).textTheme.caption,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 0.01.sw,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: Text(
-                          validThru,
-                          style: Theme.of(context).textTheme.caption,
+                        SizedBox(
+                          width: 0.01.sw,
                         ),
-                      )
-                    ],
-                  )
-                ],
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            "valid \n thru",
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption
+                                .copyWith(fontSize: 11),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 0.01.sw,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: Text(
+                            validThru,
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -106,51 +115,61 @@ class ActualCards extends StatelessWidget {
             Stack(
               children: [
                 Align(child: SvgPicture.asset(image)),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: 0.15.sh,
-                    width: 0.6.sw,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(cardNumber),
-                        SizedBox(
-                          height: 0.0265.sh,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              name,
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                            SizedBox(
-                              width: 0.01.sw,
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Text(
-                                "valid \n thru",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .caption
-                                    .copyWith(fontSize: 11),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      height: 0.15.sh,
+                      width: 0.6.sw,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(cardNumber),
+                          SizedBox(
+                            height: 0.0265.sh,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Container(
+                                width: 0.15.sw,
+                                child: AutoSizeText(
+                                  name,
+                                  style: Theme.of(context).textTheme.caption,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxFontSize: 15,
+                                  minFontSize: 10,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 0.01.sw,
-                            ),
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: Text(
-                                validThru,
-                                style: Theme.of(context).textTheme.caption,
+                              SizedBox(
+                                width: 0.01.sw,
                               ),
-                            )
-                          ],
-                        )
-                      ],
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                  "valid \n thru",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .caption
+                                      .copyWith(fontSize: 11),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 0.01.sw,
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Text(
+                                  validThru,
+                                  style: Theme.of(context).textTheme.caption,
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

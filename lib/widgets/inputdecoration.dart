@@ -16,6 +16,7 @@ InputDecoration inputFormatTwo(BuildContext context,
       errorStyle: TextStyle(color: Colors.white),
       floatingLabelBehavior: FloatingLabelBehavior.never,
       // filled: true,
+
       icon: icon,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
