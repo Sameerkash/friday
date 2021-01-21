@@ -405,6 +405,9 @@ class SignUpOtpView extends HookWidget {
                           context.rootNavigator.popUntilPath('/');
                           context.rootNavigator.push('/login-view');
                         }
+                        else {
+                          showSnack(context, "Error Registering");
+                        }
                       },
                       color: Theme.of(context).buttonColor,
                     ),

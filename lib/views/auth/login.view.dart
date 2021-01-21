@@ -79,13 +79,13 @@ class LoginView extends HookWidget {
                     AuthButton(
                       text: "Login",
                       onPressed: () async {
-                        if (email.text.contains('@') &&
-                            password.text.length > 6) {
+                        // if (email.text.contains('@') &&
+                        //     password.text.length > 6) {
                           showBlockingDialog(context);
                           await context.read(authProvider).signIn(
                               {"email": email.text, "password": password.text});
                           context.rootNavigator.popUntilPath('/');
-                        }
+                        // }
                       },
                       color: Theme.of(context).buttonColor,
                     ),

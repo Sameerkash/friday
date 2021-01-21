@@ -13,12 +13,16 @@ import 'package:flutter/material.dart';
 import '../views/auth/login.view.dart';
 import '../views/auth/signup.view.dart';
 import '../views/cards/add.card.view.dart';
+import '../views/home/home.view.dart';
 import '../views/kyc/kyc.dart';
 import '../views/landing.widget.dart';
+import '../views/profile/profile.view.dart';
 import '../views/wallet/wallet.view.dart';
 
 class Routes {
   static const String landingWidget = '/';
+  static const String homeView = '/home-view';
+  static const String profileView = '/profile-view';
   static const String addCardView = '/add-card-view';
   static const String walletView = '/wallet-view';
   static const String kYCView = '/k-yc-view';
@@ -28,6 +32,8 @@ class Routes {
   static const String signUpOtpView = '/sign-up-otp-view';
   static const all = <String>{
     landingWidget,
+    homeView,
+    profileView,
     addCardView,
     walletView,
     kYCView,
@@ -43,6 +49,8 @@ class Router extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.landingWidget, page: LandingWidget),
+    RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.profileView, page: ProfileView),
     RouteDef(Routes.addCardView, page: AddCardView),
     RouteDef(Routes.walletView, page: WalletView),
     RouteDef(Routes.kYCView, page: KYCView),
@@ -57,6 +65,18 @@ class Router extends RouterBase {
     LandingWidget: (data) {
       return CupertinoPageRoute<dynamic>(
         builder: (context) => LandingWidget(),
+        settings: data,
+      );
+    },
+    HomeView: (data) {
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => HomeView(),
+        settings: data,
+      );
+    },
+    ProfileView: (data) {
+      return CupertinoPageRoute<dynamic>(
+        builder: (context) => ProfileView(),
         settings: data,
       );
     },
@@ -114,6 +134,10 @@ class Router extends RouterBase {
 
 extension RouterExtendedNavigatorStateX on ExtendedNavigatorState {
   Future<dynamic> pushLandingWidget() => push<dynamic>(Routes.landingWidget);
+
+  Future<dynamic> pushHomeView() => push<dynamic>(Routes.homeView);
+
+  Future<dynamic> pushProfileView() => push<dynamic>(Routes.profileView);
 
   Future<dynamic> pushAddCardView({
     Key key,

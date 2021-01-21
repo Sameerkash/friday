@@ -1,12 +1,14 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 import '../../widgets/creditcards.dart';
 import 'add.card.view.dart';
 
-class CardsView extends StatelessWidget {
+class CardsView extends HookWidget {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,7 @@ class CardsView extends StatelessWidget {
                   separatorBuilder: (_, __) {
                     return SizedBox();
                   },
-                  itemCount: 3),
+                  itemCount: 5),
               SizedBox(
                 height: 0.08.sh,
               ),

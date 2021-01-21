@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:friday/models/common/cards_list.response.dart';
 import 'package:friday/models/common/user.response.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
+import 'package:sembast/utils/value_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'http.client.dart';
@@ -31,6 +33,7 @@ class AppRepository {
 
   /// keys
   static const USERKEY = 'loggedInUser';
+  static const CARDSKEY = 'cardsList';
   static const BASE_URL = "https://projekt-friday-backend.herokuapp.com";
   static const BASE_URL2 = "https://fridaycard.herokuapp.com";
 
@@ -41,11 +44,22 @@ class AppRepository {
     return LoginUserResponse.fromJson(json);
   }
 
+  Future<CardsList> getCardsList() async {
+    final json = await commonStore.record(CARDSKEY).get(await getDb());
+
+    if (json == null) return null;
+    return CardsList.fromJson(json);
+  }
+
+  Future<void> logoutUser() async {
+    await commonStore.record(USERKEY).delete(await getDb());
+  }
+
   /// Header information for Authorization on server
   Future<Map<String, dynamic>> _getHeader() async {
     final user = await getLoggedInUser();
-    // if (user?.userId == null) return {};
-    // return {'auth': '${user.userId}'};
+    if (user == null) return {};
+    return {'auth': '${user.authToken}'};
   }
 
   /// Sends a POST request to the given Api path and Body
@@ -56,7 +70,7 @@ class AppRepository {
         sendProgress: sendProgress, sendTimeout: sendTimeout)); //.data
   }
 
-  /// Sends a POST request to the given Api path and Body
+  /// Sends a PUT request to the given Api path and Body
   Future<dynamic> sendPut(String path, dynamic body, String baseUrl,
       {ProgressCallback sendProgress, int sendTimeout}) async {
     return (await HttpClient.instance.put(
@@ -96,9 +110,61 @@ class AppRepository {
     return prefs.getBool('onboard') ?? false;
   }
 
+  Future<bool> setCardLimit(int newLimit) async {
+    try {
+
+      final res = await sendPut("/user/limit/$newLimit", "", BASE_URL);
+
+      if (res.statusCode == 200) {
+        print(res.data);
+
+        var dbUser = cloneMap(await commonStore.record(USERKEY).get(await getDb()));
+        dbUser['user_details']['limit'] = res.data['limit'];
+
+        await commonStore.record(USERKEY).put(await getDb(), dbUser);
+
+        return true;
+      }
+
+      return false;
+
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> setVCardStatus(bool status) async {
+    final user = await getLoggedInUser();
+    print(user.authToken);
+    try {
+      String queryString = Uri(queryParameters: {"activate": status.toString()}).query;
+
+      print(queryString);
+
+      final res =
+          await sendPut("/user/vcard/change-status?$queryString", "", BASE_URL);
+
+      if (res.statusCode == 200) {
+        print(res.data);
+
+        // var dbUser = cloneMap(await commonStore.record(USERKEY).get(await getDb()));
+        // dbUser['user_details']['limit'] = res.data['limit'];
+        //
+        // await commonStore.record(USERKEY).put(await getDb(), dbUser);
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
   Future<bool> signUp(Map<String, dynamic> form) async {
     try {
-      var str = "${form['email']} | ${form['password']}";
+      var str = "${form['email']}:${form['password']}|0000";
       var bytes = utf8.encode(str);
       var base64Str = base64.encode(bytes);
       print(base64Str);
@@ -122,17 +188,51 @@ class AppRepository {
     }
   }
 
+  Future<bool> addCard(Map<String, dynamic> form) async {
+    try {
+      final Map<String, dynamic> body = {
+        "card_number": form["card_number"],
+        "name_on_card": form["name_on_card"],
+        "card_type": form["card_type"],
+        "expiration_month": form["expiration_month"],
+        "expiration_year": form["expiration_year"],
+        "security_code": form["security_code"]
+      };
+
+      final res = await sendPost("/add-card", body, BASE_URL2);
+
+
+      if (res.statusCode == 200) {
+        print(res.data);
+        return true;
+      };
+
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<LoginUserResponse> login(Map<String, dynamic> form) async {
     try {
-      var str = "${form['email']} | ${form['password']}";
+      print(form['email']);
+      print(form['password']);
+
+      var str = "${form['email']}:${form['password']}";
       var bytes = utf8.encode(str);
       final String token = base64.encode(bytes);
+      // final String token = 'c2F1cmF2QGdtYWlsLmNvbTpwYXNz';
       print(token);
 
-      Map<String, dynamic> header = {'auth': '$token'};
+      Map<String, dynamic> header = {
+        'auth': token.toString(),
+        'Content-Type': 'application/json'
+      };
+
       final res = await sendGet('/login', BASE_URL, header: header);
+      print(res);
       if (res.statusCode == 200) {
-        print("response" + res.data);
+        print(res.data['vcard']);
         await commonStore.record(USERKEY).put(await getDb(), res.data);
         final userLogin = LoginUserResponse.fromJson(res.data);
         return userLogin;
