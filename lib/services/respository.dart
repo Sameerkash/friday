@@ -45,10 +45,34 @@ class AppRepository {
   }
 
   Future<CardsList> getCardsList() async {
-    final json = await commonStore.record(CARDSKEY).get(await getDb());
+    // final json = await commonStore.record(CARDSKEY).get(await getDb());
+    //
+    // if (json == null) return null;
+    // return CardsList.fromJson(json);
 
-    if (json == null) return null;
-    return CardsList.fromJson(json);
+    try {
+      var res = await sendGet("/user/get-card", BASE_URL);
+
+      if (res.statusCode == 200) {
+        print(res.data);
+      } else {
+        print("ERROR");
+        print(res);
+        return null;
+      }
+
+      CardsList cardsList = CardsList.fromJson(res.data);
+
+      print(cardsList);
+
+      return cardsList;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+
+    return null;
+
   }
 
   Future<void> logoutUser() async {

@@ -130,11 +130,15 @@ class _AddCardViewState extends State<AddCardView> {
                               "security_code": code.value
                             };
                             
-                            final res = await repo.addCard(form);
+                            // final res = await repo.addCard(form);
 
-                            if (res) {
+                            final res = await repo.getCardsList();
+
+                            print(res);
+
+                            // if (res) {
                               // add card to list
-                            }
+                            // }
 
                             context.rootNavigator.pop();
                           },

@@ -23,7 +23,7 @@ class _$CardTearOff {
       @JsonKey(name: 'card_last_four_digits')
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
-          String cardToken,
+          int cardToken,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
@@ -78,7 +78,7 @@ mixin _$Card {
   @JsonKey(name: 'card_last_four_digits')
   String get cardLastFourDigits;
   @JsonKey(name: 'card_token')
-  String get cardToken;
+  int get cardToken;
   @JsonKey(name: 'card_type')
   String get cardType;
   @JsonKey(name: 'card_subType')
@@ -115,7 +115,7 @@ abstract class $CardCopyWith<$Res> {
       @JsonKey(name: 'card_last_four_digits')
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
-          String cardToken,
+          int cardToken,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
@@ -169,7 +169,7 @@ class _$CardCopyWithImpl<$Res> implements $CardCopyWith<$Res> {
       cardLastFourDigits: cardLastFourDigits == freezed
           ? _value.cardLastFourDigits
           : cardLastFourDigits as String,
-      cardToken: cardToken == freezed ? _value.cardToken : cardToken as String,
+      cardToken: cardToken == freezed ? _value.cardToken : cardToken as int,
       cardType: cardType == freezed ? _value.cardType : cardType as String,
       cardSubType:
           cardSubType == freezed ? _value.cardSubType : cardSubType as String,
@@ -202,7 +202,7 @@ abstract class _$CardCopyWith<$Res> implements $CardCopyWith<$Res> {
       @JsonKey(name: 'card_last_four_digits')
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
-          String cardToken,
+          int cardToken,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
@@ -257,7 +257,7 @@ class __$CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res>
       cardLastFourDigits: cardLastFourDigits == freezed
           ? _value.cardLastFourDigits
           : cardLastFourDigits as String,
-      cardToken: cardToken == freezed ? _value.cardToken : cardToken as String,
+      cardToken: cardToken == freezed ? _value.cardToken : cardToken as int,
       cardType: cardType == freezed ? _value.cardType : cardType as String,
       cardSubType:
           cardSubType == freezed ? _value.cardSubType : cardSubType as String,
@@ -309,7 +309,7 @@ class _$_Card implements _Card {
   final String cardLastFourDigits;
   @override
   @JsonKey(name: 'card_token')
-  final String cardToken;
+  final int cardToken;
   @override
   @JsonKey(name: 'card_type')
   final String cardType;
@@ -425,7 +425,7 @@ abstract class _Card implements Card {
       @JsonKey(name: 'card_last_four_digits')
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
-          String cardToken,
+          int cardToken,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
@@ -457,7 +457,7 @@ abstract class _Card implements Card {
   String get cardLastFourDigits;
   @override
   @JsonKey(name: 'card_token')
-  String get cardToken;
+  int get cardToken;
   @override
   @JsonKey(name: 'card_type')
   String get cardType;

@@ -10,7 +10,7 @@ _$_Card _$_$_CardFromJson(Map<String, dynamic> json) {
   return _$_Card(
     aesEncryptedCardNumber: json['aes_encrypted_card_number'] as String,
     cardLastFourDigits: json['card_last_four_digits'] as String,
-    cardToken: json['card_token'] as String,
+    cardToken: json['card_token'] as int,
     cardType: json['card_type'] as String,
     cardSubType: json['card_subType'] as String,
     binCategory: json['bin_category'] as String,

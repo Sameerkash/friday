@@ -6,7 +6,7 @@ abstract class Card with _$Card {
   const factory Card({
     @JsonKey(name: 'aes_encrypted_card_number') String aesEncryptedCardNumber,
     @JsonKey(name: 'card_last_four_digits') String cardLastFourDigits,
-    @JsonKey(name: 'card_token') String cardToken,
+    @JsonKey(name: 'card_token') int cardToken,
     @JsonKey(name: 'card_type') String cardType,
     @JsonKey(name: 'card_subType') String cardSubType,
     @JsonKey(name: 'bin_category') String binCategory,
