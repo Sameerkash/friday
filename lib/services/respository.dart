@@ -37,6 +37,8 @@ class AppRepository {
   static const BASE_URL = "https://projekt-friday-backend.herokuapp.com";
   static const BASE_URL2 = "https://fridaycard.herokuapp.com";
 
+  static DateTime lastRequestSent = DateTime.now();
+
   /// Fetches the profile information of the currently loggedIn user from the localStorage
   Future<LoginUserResponse> getLoggedInUser() async {
     final json = await commonStore.record(USERKEY).get(await getDb());
@@ -133,10 +135,22 @@ class AppRepository {
   }
 
   Future<bool> setCardLimit(int newLimit) async {
+
+    print('Time DIff: ${lastRequestSent.difference(DateTime.now()).inSeconds.abs()}');
+
+    if (lastRequestSent.difference(DateTime.now()).inSeconds.abs() <= 4) {
+      print('debouncing request');
+      return false;
+    }
+
+    lastRequestSent = DateTime.now();
+
     try {
+      print('sending request');
       final res = await sendPut("/user/limit/$newLimit", "", BASE_URL);
 
       if (res.statusCode == 200) {
+
         print(res.data);
 
         var dbUser =
@@ -151,6 +165,25 @@ class AppRepository {
       return false;
     } catch (e) {
       print(e);
+      return false;
+    }
+  }
+
+  Future<bool> addKYC(Map<String, dynamic> form) async {
+    try {
+      final body = form;
+      final res = await sendPost("/user/kyc", body, BASE_URL);
+
+      if (res.statusCode == 200) {
+        print(res.data);
+
+        return true;
+      }
+
+      return false;
+    } catch (e) {
+      print(e);
+
       return false;
     }
   }
@@ -170,10 +203,10 @@ class AppRepository {
       if (res.statusCode == 200) {
         print(res.data);
 
-        // var dbUser = cloneMap(await commonStore.record(USERKEY).get(await getDb()));
-        // dbUser['user_details']['limit'] = res.data['limit'];
-        //
-        // await commonStore.record(USERKEY).put(await getDb(), dbUser);
+        var dbUser = cloneMap(await commonStore.record(USERKEY).get(await getDb()));
+        dbUser['user_details']['vcard_status'] = res.data['vcard_status'];
+
+        await commonStore.record(USERKEY).put(await getDb(), dbUser);
         return true;
       }
 
