@@ -24,10 +24,14 @@ class _$CardTearOff {
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
           int cardToken,
+      @JsonKey(name: 'name_on_card')
+          String nameOnCard,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
           String cardSubType,
+      @JsonKey(name: 'card_category')
+          String cardCategory,
       @JsonKey(name: 'bin_category')
           String binCategory,
       @JsonKey(name: 'bin_number')
@@ -36,6 +40,8 @@ class _$CardTearOff {
           String issuingBank,
       @JsonKey(name: 'expiration_month')
           String expirationMonth,
+      @JsonKey(name: 'expiration_year')
+          String expirationYear,
       @JsonKey(name: 'ISO_code')
           String ISOCode,
       @JsonKey(name: 'card_regulation')
@@ -48,12 +54,15 @@ class _$CardTearOff {
       aesEncryptedCardNumber: aesEncryptedCardNumber,
       cardLastFourDigits: cardLastFourDigits,
       cardToken: cardToken,
+      nameOnCard: nameOnCard,
       cardType: cardType,
       cardSubType: cardSubType,
+      cardCategory: cardCategory,
       binCategory: binCategory,
       binNumber: binNumber,
       issuingBank: issuingBank,
       expirationMonth: expirationMonth,
+      expirationYear: expirationYear,
       ISOCode: ISOCode,
       cardRegulation: cardRegulation,
       isDefault: isDefault,
@@ -79,10 +88,14 @@ mixin _$Card {
   String get cardLastFourDigits;
   @JsonKey(name: 'card_token')
   int get cardToken;
+  @JsonKey(name: 'name_on_card')
+  String get nameOnCard;
   @JsonKey(name: 'card_type')
   String get cardType;
   @JsonKey(name: 'card_subType')
   String get cardSubType;
+  @JsonKey(name: 'card_category')
+  String get cardCategory;
   @JsonKey(name: 'bin_category')
   String get binCategory;
   @JsonKey(name: 'bin_number')
@@ -91,6 +104,8 @@ mixin _$Card {
   String get issuingBank;
   @JsonKey(name: 'expiration_month')
   String get expirationMonth;
+  @JsonKey(name: 'expiration_year')
+  String get expirationYear;
   @JsonKey(name: 'ISO_code')
   String get ISOCode;
   @JsonKey(name: 'card_regulation')
@@ -116,10 +131,14 @@ abstract class $CardCopyWith<$Res> {
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
           int cardToken,
+      @JsonKey(name: 'name_on_card')
+          String nameOnCard,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
           String cardSubType,
+      @JsonKey(name: 'card_category')
+          String cardCategory,
       @JsonKey(name: 'bin_category')
           String binCategory,
       @JsonKey(name: 'bin_number')
@@ -128,6 +147,8 @@ abstract class $CardCopyWith<$Res> {
           String issuingBank,
       @JsonKey(name: 'expiration_month')
           String expirationMonth,
+      @JsonKey(name: 'expiration_year')
+          String expirationYear,
       @JsonKey(name: 'ISO_code')
           String ISOCode,
       @JsonKey(name: 'card_regulation')
@@ -151,12 +172,15 @@ class _$CardCopyWithImpl<$Res> implements $CardCopyWith<$Res> {
     Object aesEncryptedCardNumber = freezed,
     Object cardLastFourDigits = freezed,
     Object cardToken = freezed,
+    Object nameOnCard = freezed,
     Object cardType = freezed,
     Object cardSubType = freezed,
+    Object cardCategory = freezed,
     Object binCategory = freezed,
     Object binNumber = freezed,
     Object issuingBank = freezed,
     Object expirationMonth = freezed,
+    Object expirationYear = freezed,
     Object ISOCode = freezed,
     Object cardRegulation = freezed,
     Object isDefault = freezed,
@@ -170,9 +194,14 @@ class _$CardCopyWithImpl<$Res> implements $CardCopyWith<$Res> {
           ? _value.cardLastFourDigits
           : cardLastFourDigits as String,
       cardToken: cardToken == freezed ? _value.cardToken : cardToken as int,
+      nameOnCard:
+          nameOnCard == freezed ? _value.nameOnCard : nameOnCard as String,
       cardType: cardType == freezed ? _value.cardType : cardType as String,
       cardSubType:
           cardSubType == freezed ? _value.cardSubType : cardSubType as String,
+      cardCategory: cardCategory == freezed
+          ? _value.cardCategory
+          : cardCategory as String,
       binCategory:
           binCategory == freezed ? _value.binCategory : binCategory as String,
       binNumber: binNumber == freezed ? _value.binNumber : binNumber as String,
@@ -181,6 +210,9 @@ class _$CardCopyWithImpl<$Res> implements $CardCopyWith<$Res> {
       expirationMonth: expirationMonth == freezed
           ? _value.expirationMonth
           : expirationMonth as String,
+      expirationYear: expirationYear == freezed
+          ? _value.expirationYear
+          : expirationYear as String,
       ISOCode: ISOCode == freezed ? _value.ISOCode : ISOCode as String,
       cardRegulation: cardRegulation == freezed
           ? _value.cardRegulation
@@ -203,10 +235,14 @@ abstract class _$CardCopyWith<$Res> implements $CardCopyWith<$Res> {
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
           int cardToken,
+      @JsonKey(name: 'name_on_card')
+          String nameOnCard,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
           String cardSubType,
+      @JsonKey(name: 'card_category')
+          String cardCategory,
       @JsonKey(name: 'bin_category')
           String binCategory,
       @JsonKey(name: 'bin_number')
@@ -215,6 +251,8 @@ abstract class _$CardCopyWith<$Res> implements $CardCopyWith<$Res> {
           String issuingBank,
       @JsonKey(name: 'expiration_month')
           String expirationMonth,
+      @JsonKey(name: 'expiration_year')
+          String expirationYear,
       @JsonKey(name: 'ISO_code')
           String ISOCode,
       @JsonKey(name: 'card_regulation')
@@ -239,12 +277,15 @@ class __$CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res>
     Object aesEncryptedCardNumber = freezed,
     Object cardLastFourDigits = freezed,
     Object cardToken = freezed,
+    Object nameOnCard = freezed,
     Object cardType = freezed,
     Object cardSubType = freezed,
+    Object cardCategory = freezed,
     Object binCategory = freezed,
     Object binNumber = freezed,
     Object issuingBank = freezed,
     Object expirationMonth = freezed,
+    Object expirationYear = freezed,
     Object ISOCode = freezed,
     Object cardRegulation = freezed,
     Object isDefault = freezed,
@@ -258,9 +299,14 @@ class __$CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res>
           ? _value.cardLastFourDigits
           : cardLastFourDigits as String,
       cardToken: cardToken == freezed ? _value.cardToken : cardToken as int,
+      nameOnCard:
+          nameOnCard == freezed ? _value.nameOnCard : nameOnCard as String,
       cardType: cardType == freezed ? _value.cardType : cardType as String,
       cardSubType:
           cardSubType == freezed ? _value.cardSubType : cardSubType as String,
+      cardCategory: cardCategory == freezed
+          ? _value.cardCategory
+          : cardCategory as String,
       binCategory:
           binCategory == freezed ? _value.binCategory : binCategory as String,
       binNumber: binNumber == freezed ? _value.binNumber : binNumber as String,
@@ -269,6 +315,9 @@ class __$CardCopyWithImpl<$Res> extends _$CardCopyWithImpl<$Res>
       expirationMonth: expirationMonth == freezed
           ? _value.expirationMonth
           : expirationMonth as String,
+      expirationYear: expirationYear == freezed
+          ? _value.expirationYear
+          : expirationYear as String,
       ISOCode: ISOCode == freezed ? _value.ISOCode : ISOCode as String,
       cardRegulation: cardRegulation == freezed
           ? _value.cardRegulation
@@ -287,12 +336,15 @@ class _$_Card implements _Card {
       {@JsonKey(name: 'aes_encrypted_card_number') this.aesEncryptedCardNumber,
       @JsonKey(name: 'card_last_four_digits') this.cardLastFourDigits,
       @JsonKey(name: 'card_token') this.cardToken,
+      @JsonKey(name: 'name_on_card') this.nameOnCard,
       @JsonKey(name: 'card_type') this.cardType,
       @JsonKey(name: 'card_subType') this.cardSubType,
+      @JsonKey(name: 'card_category') this.cardCategory,
       @JsonKey(name: 'bin_category') this.binCategory,
       @JsonKey(name: 'bin_number') this.binNumber,
       @JsonKey(name: 'issuing_bank') this.issuingBank,
       @JsonKey(name: 'expiration_month') this.expirationMonth,
+      @JsonKey(name: 'expiration_year') this.expirationYear,
       @JsonKey(name: 'ISO_code') this.ISOCode,
       @JsonKey(name: 'card_regulation') this.cardRegulation,
       @JsonKey(name: 'is_default') this.isDefault,
@@ -311,11 +363,17 @@ class _$_Card implements _Card {
   @JsonKey(name: 'card_token')
   final int cardToken;
   @override
+  @JsonKey(name: 'name_on_card')
+  final String nameOnCard;
+  @override
   @JsonKey(name: 'card_type')
   final String cardType;
   @override
   @JsonKey(name: 'card_subType')
   final String cardSubType;
+  @override
+  @JsonKey(name: 'card_category')
+  final String cardCategory;
   @override
   @JsonKey(name: 'bin_category')
   final String binCategory;
@@ -328,6 +386,9 @@ class _$_Card implements _Card {
   @override
   @JsonKey(name: 'expiration_month')
   final String expirationMonth;
+  @override
+  @JsonKey(name: 'expiration_year')
+  final String expirationYear;
   @override
   @JsonKey(name: 'ISO_code')
   final String ISOCode;
@@ -343,7 +404,7 @@ class _$_Card implements _Card {
 
   @override
   String toString() {
-    return 'Card(aesEncryptedCardNumber: $aesEncryptedCardNumber, cardLastFourDigits: $cardLastFourDigits, cardToken: $cardToken, cardType: $cardType, cardSubType: $cardSubType, binCategory: $binCategory, binNumber: $binNumber, issuingBank: $issuingBank, expirationMonth: $expirationMonth, ISOCode: $ISOCode, cardRegulation: $cardRegulation, isDefault: $isDefault, cardId: $cardId)';
+    return 'Card(aesEncryptedCardNumber: $aesEncryptedCardNumber, cardLastFourDigits: $cardLastFourDigits, cardToken: $cardToken, nameOnCard: $nameOnCard, cardType: $cardType, cardSubType: $cardSubType, cardCategory: $cardCategory, binCategory: $binCategory, binNumber: $binNumber, issuingBank: $issuingBank, expirationMonth: $expirationMonth, expirationYear: $expirationYear, ISOCode: $ISOCode, cardRegulation: $cardRegulation, isDefault: $isDefault, cardId: $cardId)';
   }
 
   @override
@@ -359,12 +420,18 @@ class _$_Card implements _Card {
             (identical(other.cardToken, cardToken) ||
                 const DeepCollectionEquality()
                     .equals(other.cardToken, cardToken)) &&
+            (identical(other.nameOnCard, nameOnCard) ||
+                const DeepCollectionEquality()
+                    .equals(other.nameOnCard, nameOnCard)) &&
             (identical(other.cardType, cardType) ||
                 const DeepCollectionEquality()
                     .equals(other.cardType, cardType)) &&
             (identical(other.cardSubType, cardSubType) ||
                 const DeepCollectionEquality()
                     .equals(other.cardSubType, cardSubType)) &&
+            (identical(other.cardCategory, cardCategory) ||
+                const DeepCollectionEquality()
+                    .equals(other.cardCategory, cardCategory)) &&
             (identical(other.binCategory, binCategory) ||
                 const DeepCollectionEquality()
                     .equals(other.binCategory, binCategory)) &&
@@ -377,6 +444,9 @@ class _$_Card implements _Card {
             (identical(other.expirationMonth, expirationMonth) ||
                 const DeepCollectionEquality()
                     .equals(other.expirationMonth, expirationMonth)) &&
+            (identical(other.expirationYear, expirationYear) ||
+                const DeepCollectionEquality()
+                    .equals(other.expirationYear, expirationYear)) &&
             (identical(other.ISOCode, ISOCode) ||
                 const DeepCollectionEquality()
                     .equals(other.ISOCode, ISOCode)) &&
@@ -396,12 +466,15 @@ class _$_Card implements _Card {
       const DeepCollectionEquality().hash(aesEncryptedCardNumber) ^
       const DeepCollectionEquality().hash(cardLastFourDigits) ^
       const DeepCollectionEquality().hash(cardToken) ^
+      const DeepCollectionEquality().hash(nameOnCard) ^
       const DeepCollectionEquality().hash(cardType) ^
       const DeepCollectionEquality().hash(cardSubType) ^
+      const DeepCollectionEquality().hash(cardCategory) ^
       const DeepCollectionEquality().hash(binCategory) ^
       const DeepCollectionEquality().hash(binNumber) ^
       const DeepCollectionEquality().hash(issuingBank) ^
       const DeepCollectionEquality().hash(expirationMonth) ^
+      const DeepCollectionEquality().hash(expirationYear) ^
       const DeepCollectionEquality().hash(ISOCode) ^
       const DeepCollectionEquality().hash(cardRegulation) ^
       const DeepCollectionEquality().hash(isDefault) ^
@@ -426,10 +499,14 @@ abstract class _Card implements Card {
           String cardLastFourDigits,
       @JsonKey(name: 'card_token')
           int cardToken,
+      @JsonKey(name: 'name_on_card')
+          String nameOnCard,
       @JsonKey(name: 'card_type')
           String cardType,
       @JsonKey(name: 'card_subType')
           String cardSubType,
+      @JsonKey(name: 'card_category')
+          String cardCategory,
       @JsonKey(name: 'bin_category')
           String binCategory,
       @JsonKey(name: 'bin_number')
@@ -438,6 +515,8 @@ abstract class _Card implements Card {
           String issuingBank,
       @JsonKey(name: 'expiration_month')
           String expirationMonth,
+      @JsonKey(name: 'expiration_year')
+          String expirationYear,
       @JsonKey(name: 'ISO_code')
           String ISOCode,
       @JsonKey(name: 'card_regulation')
@@ -459,11 +538,17 @@ abstract class _Card implements Card {
   @JsonKey(name: 'card_token')
   int get cardToken;
   @override
+  @JsonKey(name: 'name_on_card')
+  String get nameOnCard;
+  @override
   @JsonKey(name: 'card_type')
   String get cardType;
   @override
   @JsonKey(name: 'card_subType')
   String get cardSubType;
+  @override
+  @JsonKey(name: 'card_category')
+  String get cardCategory;
   @override
   @JsonKey(name: 'bin_category')
   String get binCategory;
@@ -476,6 +561,9 @@ abstract class _Card implements Card {
   @override
   @JsonKey(name: 'expiration_month')
   String get expirationMonth;
+  @override
+  @JsonKey(name: 'expiration_year')
+  String get expirationYear;
   @override
   @JsonKey(name: 'ISO_code')
   String get ISOCode;

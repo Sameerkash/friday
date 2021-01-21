@@ -45,34 +45,32 @@ class AppRepository {
   }
 
   Future<CardsList> getCardsList() async {
-    // final json = await commonStore.record(CARDSKEY).get(await getDb());
-    //
-    // if (json == null) return null;
-    // return CardsList.fromJson(json);
 
     try {
       var res = await sendGet("/user/get-card", BASE_URL);
 
       if (res.statusCode == 200) {
         print(res.data);
+
+        CardsList cardsList = CardsList.fromJson(res.data);
+
+        await commonStore.record(CARDSKEY).put(await getDb(), res.data);
+
+        return cardsList;
+
       } else {
         print("ERROR");
         print(res);
         return null;
       }
 
-      CardsList cardsList = CardsList.fromJson(res.data);
 
-      print(cardsList);
-
-      return cardsList;
     } catch (e) {
       print(e);
       return null;
     }
 
     return null;
-
   }
 
   Future<void> logoutUser() async {
@@ -136,13 +134,13 @@ class AppRepository {
 
   Future<bool> setCardLimit(int newLimit) async {
     try {
-
       final res = await sendPut("/user/limit/$newLimit", "", BASE_URL);
 
       if (res.statusCode == 200) {
         print(res.data);
 
-        var dbUser = cloneMap(await commonStore.record(USERKEY).get(await getDb()));
+        var dbUser =
+            cloneMap(await commonStore.record(USERKEY).get(await getDb()));
         dbUser['user_details']['limit'] = res.data['limit'];
 
         await commonStore.record(USERKEY).put(await getDb(), dbUser);
@@ -151,7 +149,6 @@ class AppRepository {
       }
 
       return false;
-
     } catch (e) {
       print(e);
       return false;
@@ -162,7 +159,8 @@ class AppRepository {
     final user = await getLoggedInUser();
     print(user.authToken);
     try {
-      String queryString = Uri(queryParameters: {"activate": status.toString()}).query;
+      String queryString =
+          Uri(queryParameters: {"activate": status.toString()}).query;
 
       print(queryString);
 
@@ -225,11 +223,11 @@ class AppRepository {
 
       final res = await sendPost("/add-card", body, BASE_URL2);
 
-
       if (res.statusCode == 200) {
         print(res.data);
         return true;
-      };
+      }
+      ;
 
       return false;
     } catch (e) {
