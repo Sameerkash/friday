@@ -250,9 +250,11 @@ class AppRepository {
         "name_on_card": form["name_on_card"],
         "card_type": form["card_type"],
         "expiration_month": form["expiration_month"],
-        "expiration_year": form["expiration_year"],
+        "expiration_year": "20"+form["expiration_year"],
         "security_code": form["security_code"]
       };
+
+      print(body);
 
       final res = await sendPost("/add-card", body, BASE_URL2);
 
@@ -260,10 +262,29 @@ class AppRepository {
         print(res.data);
         return true;
       }
-      ;
 
       return false;
     } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> setDefaultCard(int index) async {
+    try {
+      final res = await sendPut("/change-default?index=$index", "", BASE_URL2);
+
+      if (res.statusCode == 200) {
+        print(res.data);
+
+        return true;
+      };
+
+      return false;
+
+    } catch (e) {
+      print(e);
+
       return false;
     }
   }

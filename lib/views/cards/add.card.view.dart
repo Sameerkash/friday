@@ -122,17 +122,17 @@ class _AddCardViewState extends State<AddCardView> {
                             final repo = context.read(appRepositoryProvider);
 
                             Map<String, dynamic> form = {
-                              "card_number": cardNumber.value,
-                              "name_on_card":  name.value,
-                              "card_type": "credit",
+                              "card_number": cardNumber.text,
+                              "name_on_card":  name.text,
+                              "card_type": "VISA",
                               "expiration_month": month.value,
                               "expiration_year": year.value,
-                              "security_code": code.value
+                              "security_code": code.text
                             };
                             
-                            // final res = await repo.addCard(form);
+                            final res = await repo.addCard(form);
 
-                            final res = await repo.getCardsList();
+                            // final res = await repo.getCardsList();
 
                             print(res);
 
@@ -140,7 +140,7 @@ class _AddCardViewState extends State<AddCardView> {
                               // add card to list
                             // }
 
-                            context.rootNavigator.pop();
+                            context.rootNavigator.popUntilPath("/");
                           },
                           text: "Add",
                           color: Theme.of(context).buttonColor,
