@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -79,19 +80,21 @@ class LoginView extends HookWidget {
                     AuthButton(
                       text: "Login",
                       onPressed: () async {
-                        if (email.text.contains('@') &&
-                            password.text.length > 6) {
-                          showBlockingDialog(context);
-                          await context.read(authProvider).signIn(
-                              {"email": email.text, "password": password.text});
-                          context.rootNavigator.popUntilPath('/');
-                        }
+                        // if (email.text.contains('@') &&
+                        //     password.text.length > 6) {
+                        showBlockingDialog(context);
+                        await context.read(authProvider).signIn(
+                            {"email": email.text, "password": password.text});
+                        context.rootNavigator.popUntilPath('/');
+                        // }
                       },
                       color: Theme.of(context).buttonColor,
                     ),
                     AuthButton(
                       text: "Signup with Google",
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read(authProvider).signInWithGoogle();
+                      },
                       color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(

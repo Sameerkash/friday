@@ -1,8 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:friday/providers/providers.dart';
 
 class VirtualCard extends StatelessWidget {
   final String image;
@@ -90,21 +93,26 @@ class VirtualCard extends StatelessWidget {
   }
 }
 
-class ActualCards extends StatelessWidget {
+class ActualCards extends HookWidget {
+  final int index;
   final String image;
   final String cardNumber;
   final String name;
   final String validThru;
+  final bool isDefault;
   const ActualCards({
     Key key,
+    this.index,
     this.image,
     this.cardNumber,
     this.name,
     this.validThru,
+    this.isDefault = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var isDefault_ = useState(isDefault);
     return Align(
       alignment: Alignment.center,
 
@@ -180,7 +188,11 @@ class ActualCards extends StatelessWidget {
             ),
             Align(
                 alignment: Alignment.bottomRight,
-                child: CupertinoSwitch(value: true, onChanged: null))
+                child: CupertinoSwitch(value: isDefault_.value, onChanged: (val) {
+                  context.read(appRepositoryProvider).setDefaultCard(index);
+
+                  isDefault_.value = val;
+                }))
           ],
         ),
       ),

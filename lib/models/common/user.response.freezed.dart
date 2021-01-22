@@ -19,7 +19,7 @@ class _$LoginUserResponseTearOff {
 // ignore: unused_element
   _LoginUserResponse call(
       {@JsonKey(name: 'user_details') User userDetails,
-      @JsonKey(name: 'v_card') Vcard vCard,
+      @JsonKey(name: 'vcard') Vcard vCard,
       @JsonKey(name: 'auth_token') String authToken}) {
     return _LoginUserResponse(
       userDetails: userDetails,
@@ -42,7 +42,7 @@ const $LoginUserResponse = _$LoginUserResponseTearOff();
 mixin _$LoginUserResponse {
   @JsonKey(name: 'user_details')
   User get userDetails;
-  @JsonKey(name: 'v_card')
+  @JsonKey(name: 'vcard')
   Vcard get vCard;
   @JsonKey(name: 'auth_token')
   String get authToken;
@@ -59,7 +59,7 @@ abstract class $LoginUserResponseCopyWith<$Res> {
       _$LoginUserResponseCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'user_details') User userDetails,
-      @JsonKey(name: 'v_card') Vcard vCard,
+      @JsonKey(name: 'vcard') Vcard vCard,
       @JsonKey(name: 'auth_token') String authToken});
 
   $UserCopyWith<$Res> get userDetails;
@@ -119,7 +119,7 @@ abstract class _$LoginUserResponseCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(name: 'user_details') User userDetails,
-      @JsonKey(name: 'v_card') Vcard vCard,
+      @JsonKey(name: 'vcard') Vcard vCard,
       @JsonKey(name: 'auth_token') String authToken});
 
   @override
@@ -160,7 +160,7 @@ class __$LoginUserResponseCopyWithImpl<$Res>
 class _$_LoginUserResponse implements _LoginUserResponse {
   const _$_LoginUserResponse(
       {@JsonKey(name: 'user_details') this.userDetails,
-      @JsonKey(name: 'v_card') this.vCard,
+      @JsonKey(name: 'vcard') this.vCard,
       @JsonKey(name: 'auth_token') this.authToken});
 
   factory _$_LoginUserResponse.fromJson(Map<String, dynamic> json) =>
@@ -170,7 +170,7 @@ class _$_LoginUserResponse implements _LoginUserResponse {
   @JsonKey(name: 'user_details')
   final User userDetails;
   @override
-  @JsonKey(name: 'v_card')
+  @JsonKey(name: 'vcard')
   final Vcard vCard;
   @override
   @JsonKey(name: 'auth_token')
@@ -216,7 +216,7 @@ class _$_LoginUserResponse implements _LoginUserResponse {
 abstract class _LoginUserResponse implements LoginUserResponse {
   const factory _LoginUserResponse(
       {@JsonKey(name: 'user_details') User userDetails,
-      @JsonKey(name: 'v_card') Vcard vCard,
+      @JsonKey(name: 'vcard') Vcard vCard,
       @JsonKey(name: 'auth_token') String authToken}) = _$_LoginUserResponse;
 
   factory _LoginUserResponse.fromJson(Map<String, dynamic> json) =
@@ -226,7 +226,7 @@ abstract class _LoginUserResponse implements LoginUserResponse {
   @JsonKey(name: 'user_details')
   User get userDetails;
   @override
-  @JsonKey(name: 'v_card')
+  @JsonKey(name: 'vcard')
   Vcard get vCard;
   @override
   @JsonKey(name: 'auth_token')

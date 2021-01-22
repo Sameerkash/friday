@@ -7,9 +7,13 @@ import 'package:friday/views/wallet/wallet.view.dart';
 
 import '../views/app.widget.dart';
 import '../views/cards/add.card.view.dart';
+import '../views/home/home.view.dart';
+import '../views/profile/profile.view.dart';
 
 @CupertinoAutoRouter(routes: <AutoRoute>[
   CupertinoRoute(page: LandingWidget, initial: true),
+  CupertinoRoute(page: HomeView),
+  CupertinoRoute(page: ProfileView),
   CupertinoRoute(page: AddCardView),
   CupertinoRoute(page: WalletView),
   CupertinoRoute(page: KYCView),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:friday/providers/providers.dart';
 import '../../widgets/buttons.dart';
 import '../../widgets/creditcards.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../widgets/dropdown.dart';
 import '../../widgets/inputdecoration.dart';
+
+import 'package:auto_route/auto_route.dart';
+
+import 'package:hooks_riverpod/all.dart';
 
 class AddCardView extends StatefulHookWidget {
   AddCardView({Key key}) : super(key: key);
@@ -22,6 +27,7 @@ class _AddCardViewState extends State<AddCardView> {
     var cardNumber = useTextEditingController();
     var name = useTextEditingController();
     var code = useTextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -112,7 +118,30 @@ class _AddCardViewState extends State<AddCardView> {
                       Align(
                         alignment: Alignment.topRight,
                         child: ActionButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            final repo = context.read(appRepositoryProvider);
+
+                            Map<String, dynamic> form = {
+                              "card_number": cardNumber.text,
+                              "name_on_card":  name.text,
+                              "card_type": "VISA",
+                              "expiration_month": month.value,
+                              "expiration_year": year.value,
+                              "security_code": code.text
+                            };
+                            
+                            final res = await repo.addCard(form);
+
+                            // final res = await repo.getCardsList();
+
+                            print(res);
+
+                            // if (res) {
+                              // add card to list
+                            // }
+
+                            context.rootNavigator.popUntilPath("/");
+                          },
                           text: "Add",
                           color: Theme.of(context).buttonColor,
                         ),

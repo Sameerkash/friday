@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:friday/widgets/dialog.dart';
+import 'package:hooks_riverpod/all.dart';
 
-import 'package:friday/views/wallet/wallet.view.dart';
-
+import '../../models/common/user.response.dart';
+import '../../providers/providers.dart';
 import '../../utils/string.util.dart';
 import '../../widgets/creditcards.dart';
 
@@ -55,11 +55,28 @@ class HomeView extends StatelessWidget {
                                 .textTheme
                                 .bodyText2
                                 .copyWith(color: Colors.grey)),
-                        AutoSizeText("Hi! Pranjal",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline1
-                                .copyWith(fontSize: 28)),
+                        Consumer(builder: (context, watch, child) {
+                          context.read(appRepositoryProvider).getLoggedInUser();
+
+                          return FutureBuilder<LoginUserResponse>(
+                            future: context
+                                .read(appRepositoryProvider)
+                                .getLoggedInUser(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<LoginUserResponse> snapshot) {
+                              if (snapshot.hasData) {
+                                return AutoSizeText(
+                                    "${snapshot.data.userDetails.name}",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        .copyWith(fontSize: 28));
+                              }
+
+                              return CircularProgressIndicator();
+                            },
+                          );
+                        }),
                       ],
                     ),
                   ],
@@ -89,11 +106,56 @@ class HomeView extends StatelessWidget {
                               SizedBox(
                                 height: 0.1.sh,
                               ),
-                              ActivateCardSwitch(
-                                  // TODO: Add card active state from api
-                                  // isCardActive: ,
-                                  ),
-                              MonthlySpend(),
+                              Consumer(builder: (context, watch, child) {
+                                // context.read(appRepositoryProvider).getLoggedInUser();
+
+                                return FutureBuilder<LoginUserResponse>(
+                                  future: context
+                                      .read(appRepositoryProvider)
+                                      .getLoggedInUser(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<LoginUserResponse>
+                                          snapshot) {
+                                    if (snapshot.hasData) {
+                                      return ActivateCardSwitch(
+                                        // TODO: Add card active state from api
+                                        isCardActive: snapshot
+                                            .data.userDetails.vcardStatus,
+                                      );
+                                    }
+                                    if (snapshot.hasError) {
+                                      print(snapshot.error);
+                                    }
+
+                                    return CircularProgressIndicator();
+                                  },
+                                );
+                              }),
+                              Consumer(builder: (context, watch, child) {
+                                // context.read(appRepositoryProvider).getLoggedInUser();
+
+                                return FutureBuilder<LoginUserResponse>(
+                                  future: context
+                                      .read(appRepositoryProvider)
+                                      .getLoggedInUser(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<LoginUserResponse>
+                                          snapshot) {
+                                    if (snapshot.hasData) {
+                                      return MonthlySpend(
+                                        spendValue: snapshot
+                                            .data.userDetails.limit
+                                            .toInt(),
+                                      );
+                                    }
+                                    if (snapshot.hasError) {
+                                      print(snapshot.error);
+                                    }
+
+                                    return CircularProgressIndicator();
+                                  },
+                                );
+                              }),
                               Rewards(),
                               Offers(),
                             ],
@@ -102,12 +164,31 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  VirtualCard(
-                    name: "Sumit Roy",
-                    cardNumber: "5120 4200 0000 0000",
-                    validThru: "4/25",
-                    image: "assets/Group 10768.svg",
-                  )
+                  Consumer(builder: (context, watch, child) {
+                    // context.read(appRepositoryProvider).getLoggedInUser();
+
+                    return FutureBuilder<LoginUserResponse>(
+                      future:
+                          context.read(appRepositoryProvider).getLoggedInUser(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<LoginUserResponse> snapshot) {
+                        if (snapshot.hasData) {
+                          return VirtualCard(
+                            name: "${snapshot.data.userDetails.name}",
+                            cardNumber: "${snapshot.data.vCard.vcNumber}",
+                            validThru:
+                                "${snapshot.data.vCard.expMonth}/${snapshot.data.vCard.expYear}",
+                            image: "assets/Group 10768.svg",
+                          );
+                        }
+                        if (snapshot.hasError) {
+                          print(snapshot.error);
+                        }
+
+                        return CircularProgressIndicator();
+                      },
+                    );
+                  }),
                 ],
               ),
             ],
@@ -120,6 +201,7 @@ class HomeView extends StatelessWidget {
 
 class ActivateCardSwitch extends HookWidget {
   final bool isCardActive;
+
   const ActivateCardSwitch({
     Key key,
     this.isCardActive = true,
@@ -135,8 +217,21 @@ class ActivateCardSwitch extends HookWidget {
         heightFactor: 0.5,
         child: CupertinoSwitch(
           value: isActive.value,
-          onChanged: (val) {
+          onChanged: (val) async {
             isActive.value = val;
+
+            final result =
+                await context.read(appRepositoryProvider).setVCardStatus(val);
+            if (!result) {
+              showSnack(context,
+                  "Please make sure your KYC is done and at least one card is added");
+            }
+            // result
+            // if (result) {
+            //   isActive.value = val;
+            // } else {
+            //   isActive.value = !val;
+            // }
           },
         ),
       ),
@@ -247,16 +342,19 @@ class Rewards extends StatelessWidget {
 }
 
 class MonthlySpend extends HookWidget {
+  final int spendValue;
+
   const MonthlySpend({
     Key key,
+    this.spendValue = 1000,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var limit = useState(20.0);
+    var limit = useState(spendValue);
     var limitText = limit.value;
     if (limit.value > 1000) {
-      limitText = limit.value / 1000;
+      limitText = limit.value ~/ 1000;
     }
 
     return Row(
@@ -281,9 +379,14 @@ class MonthlySpend extends HookWidget {
                   min: 0,
                   max: 200000,
                   activeColor: Colors.black,
-                  value: limit.value,
-                  onChanged: (val) {
-                    limit.value = val;
+                  value: limit.value.toDouble(),
+                  onChanged: (val) async {
+                    limit.value = val.toInt();
+                    print(val.toInt());
+
+                    final result = await context
+                        .read(appRepositoryProvider)
+                        .setCardLimit(val.toInt());
                   },
                 ),
                 // LinearPercentIndicator(
