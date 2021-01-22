@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:friday/widgets/dialog.dart';
 import 'package:hooks_riverpod/all.dart';
 
 import '../../models/common/user.response.dart';
@@ -221,6 +222,11 @@ class ActivateCardSwitch extends HookWidget {
 
             final result =
                 await context.read(appRepositoryProvider).setVCardStatus(val);
+            if (!result) {
+              showSnack(context,
+                  "Please make sure your KYC is done and at least one card is added");
+            }
+            // result
             // if (result) {
             //   isActive.value = val;
             // } else {

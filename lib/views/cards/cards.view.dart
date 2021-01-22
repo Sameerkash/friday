@@ -42,12 +42,14 @@ class CardsView extends HookWidget {
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             return ActualCards(
+                              index: index,
                               name: "${snapshot.data.cards[index].nameOnCard}",
                               cardNumber:
                                   "${snapshot.data.cards[index].binNumber}XXXXXX${snapshot.data.cards[index].cardLastFourDigits}",
                               validThru:
                                   "${snapshot.data.cards[index].expirationMonth}/${snapshot.data.cards[index].expirationYear}",
                               image: "assets/Group 10768.svg",
+                              isDefault: snapshot.data.cards[index].isDefault,
                             );
                           },
                           separatorBuilder: (_, __) {
