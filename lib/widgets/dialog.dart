@@ -1,6 +1,7 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
+//TODO: add success and failure style snackbars
 Widget showSnack(BuildContext context, String message) {
   return Flushbar(
     message: message,

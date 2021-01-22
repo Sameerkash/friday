@@ -1,15 +1,23 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:friday/providers/providers.dart';
 import 'package:friday/widgets/buttons.dart';
+import 'package:friday/widgets/dialog.dart';
 import 'package:friday/widgets/inputdecoration.dart';
+import "package:flutter_riverpod/flutter_riverpod.dart";
 
-class KYCView extends StatelessWidget {
+class KYCView extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    var pan = useTextEditingController();
+    var dob = useTextEditingController();
+    var consent = "yes";
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
@@ -58,6 +66,7 @@ class KYCView extends StatelessWidget {
                   height: 0.1.sh,
                 ),
                 TextField(
+                  controller: pan,
                   decoration: inputFormatTwo(
                     context,
                     label: "PAN Card",
@@ -70,6 +79,7 @@ class KYCView extends StatelessWidget {
                   height: 0.03.sh,
                 ),
                 TextField(
+                  controller: dob,
                   decoration: inputFormatTwo(
                     context,
                     label: "Date of Birth",
@@ -120,7 +130,24 @@ class KYCView extends StatelessWidget {
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: ActionButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      Map<String, dynamic> form = {
+                        "pan_card": pan.text,
+                        "dob": dob.text,
+                        "consent": consent,
+                      };
+                      showSnack(context, "SAVING DETAILS");
+
+                      final res = await context.read(appRepositoryProvider).addKYC(form);
+
+                      if (res) {
+                        context.rootNavigator.popUntilPath("/");
+                        showSnack(context, "SUCCESS");
+
+                      } else {
+                        showSnack(context, "ERROR OCCURED IN KYC");
+                      }
+                    },
                     text: "Submit",
                     color: Theme.of(context).buttonColor,
                     width: 0.25,
