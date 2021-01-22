@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:friday/models/common/cards_list.response.dart';
 import 'package:friday/models/common/user.response.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import 'package:sembast/utils/value_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'http.client.dart';
+import 'firebase_service.dart';
 
 class AppRepository {
   /// Setup Sembast db
@@ -19,6 +21,7 @@ class AppRepository {
   DatabaseFactory dbFactory = databaseFactoryIo;
   Database _db;
   SharedPreferences prefs;
+  FirebaseService firebaseService = FirebaseService();
 
   Future<Database> getDb() async {
     if (_db == null) {
@@ -45,7 +48,6 @@ class AppRepository {
   }
 
   Future<CardsList> getCardsList() async {
-
     try {
       var res = await sendGet("/user/get-card", BASE_URL);
 
@@ -57,14 +59,11 @@ class AppRepository {
         await commonStore.record(CARDSKEY).put(await getDb(), res.data);
 
         return cardsList;
-
       } else {
         print("ERROR");
         print(res);
         return null;
       }
-
-
     } catch (e) {
       print(e);
       return null;
@@ -269,4 +268,7 @@ class AppRepository {
       // return false;
     }
   }
+
+  Future<User> signInWIthGoogle() async =>
+      await firebaseService.signInWithGoogle();
 }
